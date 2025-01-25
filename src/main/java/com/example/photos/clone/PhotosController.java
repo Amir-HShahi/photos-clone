@@ -1,10 +1,11 @@
 package com.example.photos.clone;
 
-import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.io.IOException;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.UUID;
@@ -43,8 +44,11 @@ public class PhotosController {
     }
 
     @PostMapping("/photo")
-    public PhotoModel createPhoto(@RequestBody @Valid PhotoModel photoModel) { // get all body and convert it to json
+    public PhotoModel createPhoto(@RequestPart("data") MultipartFile file) throws IOException { // get all body and convert it to json
+        PhotoModel photoModel = new PhotoModel();
         photoModel.setId(UUID.randomUUID().toString()); //generates pseudo random id
+        photoModel.setFileName(file.getName());
+        photoModel.setData(file.getBytes());
         db.put(photoModel.getId(), photoModel);
         return photoModel;
     }

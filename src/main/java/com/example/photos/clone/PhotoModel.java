@@ -8,7 +8,9 @@ public class PhotoModel {
     @NotEmpty // import validation dependency
     // there are others to check in External libraries
     private String fileName;
+
     //raw data
+    private byte[] data;
 
     public PhotoModel() {
 
@@ -33,5 +35,13 @@ public class PhotoModel {
 
     public void setFileName(String fileName) {
         this.fileName = fileName;
+    }
+
+    public byte[] getData() {
+        return data;
+    }
+
+    public void setData(byte[] data) {
+        this.data = data;
     }
 }
