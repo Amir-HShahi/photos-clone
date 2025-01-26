@@ -10,6 +10,9 @@ public class PhotoModel {
     // there are others to check in External libraries
     private String fileName;
 
+    @JsonIgnore
+    private String contentType;
+
     //raw data
     @JsonIgnore //from jackson library, won't send this field to front end
     private byte[] data;
@@ -45,5 +48,13 @@ public class PhotoModel {
 
     public void setData(byte[] data) {
         this.data = data;
+    }
+
+    public String getContentType() {
+        return contentType;
+    }
+
+    public void setContentType(String contentType) {
+        this.contentType = contentType;
     }
 }

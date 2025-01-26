@@ -35,6 +35,7 @@ public class PhotosService { // there will be only one instance of this class
         photoModel.setId(UUID.randomUUID().toString()); //generates pseudo random id
         photoModel.setFileName(file.getOriginalFilename()); // do not use getFileName
         photoModel.setData(file.getBytes());
+        photoModel.setContentType(file.getContentType());
         db.put(photoModel.getId(), photoModel);
         return photoModel;
     }
