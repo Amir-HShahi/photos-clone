@@ -7,17 +7,17 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.UUID;
 
 @RestController
 public class PhotosController {
 
-    private HashMap<String, PhotoModel> db = new HashMap<>() {
-        {
-            put("1", new PhotoModel("1", "hey.png"));
-        }
-    };
+    //or @AutoWierd for dependency injection
+    private final PhotosService photosService;
+
+    public PhotosController(/* or @AutoWierd */PhotosService photosService) {
+        this.photosService = photosService; //dependency injection
+    }
 
     @GetMapping("/hello")
     public String hello() {
@@ -26,12 +26,12 @@ public class PhotosController {
 
     @GetMapping("/photos")
     public Collection<PhotoModel> getAllPhotos() {
-        return db.values();
+        return photosService.getPhotos();
     }
 
     @GetMapping("/photos/{id}")
     public PhotoModel getPhoto(@PathVariable String id) { // there is id in {path}
-        PhotoModel photoModel = db.get(id);
+        PhotoModel photoModel = photosService.getPhoto(id);
         if (photoModel == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 
         return photoModel;
@@ -39,17 +39,13 @@ public class PhotosController {
 
     @DeleteMapping("/photos/{id}")
     public void deletePhoto(@PathVariable String id) { // there is id in {path}
-        PhotoModel photoModel = db.remove(id);
+        PhotoModel photoModel = photosService.removePhoto(id);
         if (photoModel == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
     }
 
     @PostMapping("/photo")
     public PhotoModel createPhoto(@RequestPart("data") MultipartFile file) throws IOException { // get all body and convert it to json
-        PhotoModel photoModel = new PhotoModel();
-        photoModel.setId(UUID.randomUUID().toString()); //generates pseudo random id
-        photoModel.setFileName(file.getName());
-        photoModel.setData(file.getBytes());
-        db.put(photoModel.getId(), photoModel);
+        PhotoModel photoModel = photosService.createPhoto(file);
         return photoModel;
     }
 }
