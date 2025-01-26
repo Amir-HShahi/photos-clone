@@ -1,5 +1,7 @@
-package com.example.photos.clone;
+package com.example.photos.clone.web;
 
+import com.example.photos.clone.models.PhotoModel;
+import com.example.photos.clone.services.PhotosService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -7,7 +9,6 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
 import java.util.Collection;
-import java.util.UUID;
 
 @RestController
 public class PhotosController {
@@ -45,7 +46,6 @@ public class PhotosController {
 
     @PostMapping("/photo")
     public PhotoModel createPhoto(@RequestPart("data") MultipartFile file) throws IOException { // get all body and convert it to json
-        PhotoModel photoModel = photosService.createPhoto(file);
-        return photoModel;
+        return photosService.createPhoto(file);
     }
 }

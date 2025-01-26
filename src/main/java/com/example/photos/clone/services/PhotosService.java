@@ -1,5 +1,6 @@
-package com.example.photos.clone;
+package com.example.photos.clone.services;
 
+import com.example.photos.clone.models.PhotoModel;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 

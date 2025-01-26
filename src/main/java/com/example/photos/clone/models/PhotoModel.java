@@ -1,5 +1,6 @@
-package com.example.photos.clone;
+package com.example.photos.clone.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.validation.constraints.NotEmpty;
 
 public class PhotoModel {
@@ -10,6 +11,7 @@ public class PhotoModel {
     private String fileName;
 
     //raw data
+    @JsonIgnore //from jackson library, won't send this field to front end
     private byte[] data;
 
     public PhotoModel() {
