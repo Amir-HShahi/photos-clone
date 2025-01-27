@@ -2,14 +2,9 @@ package com.example.photos.clone.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.validation.constraints.NotEmpty;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.relational.core.mapping.Table;
 
-@Table("PHOTOS")
 public class PhotoModel {
-
-    @Id // mark for database
-    private Integer id;
+    private String id;
 
     @NotEmpty // import validation dependency
     // there are others to check in External libraries
@@ -26,11 +21,16 @@ public class PhotoModel {
 
     }
 
-    public Integer getId() {
+    public PhotoModel(String id, String fileName) {
+        this.fileName = fileName;
+        this.id = id;
+    }
+
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
